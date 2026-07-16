@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    <%= movie.title || "Movie" %>
+  </title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: #fff;
+    }
+
+    .main {
+      padding: 60px 80px;
+    }
+
+    .card {
+      display: flex;
+      gap: 75px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 106px 35px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+      flex-wrap: wrap;
+
+      .poster {
+        width: 280px;
+        border-radius: 15px;
+        transition: 0.3s;
+      }
+
+      .poster:hover {
+        transform: scale(1.05) rotate(-1deg);
+      }
+
+      .info {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .title {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .tags {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        background: #ff4757;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+
+      .meta {
+        color: #bbb;
+        margin-bottom: 20px;
+      }
+
+      .desc {
+        line-height: 1.7;
+        margin-bottom: 25px;
+        color: #ccc;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .box {
+        background: #111;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #222;
+      }
+
+      .box h4 {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 6px;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .chip {
+        background: #222;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+
+      .rating {
+        margin-top: 15px;
+        font-size: 18px;
+        color: #ffd700;
+        font-weight: bold;
+      }
+
+      .back {
+        margin-top: 30px;
+        display: inline-block;
+        padding: 10px 20px;
+        background: #ff4757;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #fff;
+        transition: 0.3s;
+      }
+
+      .back:hover {
+        background: #e84118;
+      }
+  </style>
+</head>
+
+<body>
+
+  <%- include('header') %>
+
+    <% let genres=Array.isArray(movie.genre) ? movie.genre : (movie.genre || "" ).split(","); let
+      directors=Array.isArray(movie.director) ? movie.director : (movie.director || "" ).split(","); %>
+
+      <div class="main">
+        <div class="card">
+
+          <img src="<%= movie.poster || '/assets/image/no-image.png' %>" class="poster">
+
+          <div class="info">
+
+            <h1 class="title">
+              <%= movie.title %>
+            </h1>
+
+            <div class="tags">
+              <% genres.forEach(g=> { %>
+                <span class="tag">
+                  <%= g.trim() %>
+                </span>
+                <% }) %>
+            </div>
+
+            <div class="meta">
+              📅 <%= movie.year %> • ⏱ <%= movie.duration %> min
+            </div>
+
+            <p class="desc">
+              <%= movie.description %>
+            </p>
+
+            <div class="grid">
+
+              <div class="box">
+                <h4>Director</h4>
+                <div class="chips">
+                  <% directors.forEach(d=> { %>
+                    <span class="chip">
+                      <%= d.trim() %>
+                    </span>
+                    <% }) %>
+                </div>
+              </div>
+
+              <div class="box">
+                <h4>Genre</h4>
+                <div class="chips">
+                  <% genres.forEach(g=> { %>
+                    <span class="chip">
+                      <%= g.trim() %>
+                    </span>
+                    <% }) %>
+                </div>
+              </div>
+
+              <div class="box">
+                <h4>Year</h4>
+                <p>
+                  <%= movie.year %>
+                </p>
+              </div>
+
+              <div class="box">
+                <h4>Duration</h4>
+                <p>
+                  <%= movie.duration %> min
+                </p>
+              </div>
+
+            </div>
+
+            <div class="rating">
+              ⭐ <%= movie.rating || "N/A" %> / 10
+            </div>
+
+            <a href="/" class="back">⬅ Back</a>
+
+          </div>
+
+        </div>
+      </div>
+
+      <%- include('footer') %>
+
+</body>
+
+</html>

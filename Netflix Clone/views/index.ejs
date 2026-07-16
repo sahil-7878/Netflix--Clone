@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netflix Clone - Movies</title>
+
+  <link rel="stylesheet" href="/assets/css/index.css">
+
+  <!--  Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<%- include('header') %>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+    <h1>Unlimited movies, shows & more</h1>
+    <h3>Starts at ₹149. Cancel anytime.</h3>
+    <p>Ready to watch? Enter your email</p>
+
+    <div class="cta">
+      <input type="email" placeholder="Email address">
+      <button>Get Started</button>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING -->
+<section class="trending">
+  <h2>Trending Now</h2>
+
+  <div class="movie-row">
+
+    <% if (!movies || movies.length === 0) { %>
+      <div class="empty-state">
+        <h2>No Movies Available</h2>
+        <p>Add your first movie</p>
+        <a href="/add" class="add-btn">Add Movie</a>
+      </div>
+    <% } %>
+
+    <% movies && movies.forEach((movie, index) => { %>
+      <div class="movie-card-wrapper">
+
+        <span class="rank"><%= index + 1 %></span>
+
+        <a href="/view/<%= movie._id %>" class="movie-card">
+          <img src="<%= movie.poster || '/assets/image/no-image.png' %>" alt="<%= movie.title %>">
+        </a>
+
+      </div>
+    <% }) %>
+
+  </div>
+</section>
+
+<%- include('footer') %>
+
+</body>
+</html>

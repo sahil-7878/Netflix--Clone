@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Netflix Clone - Movies</title>
+  <link rel="icon" type="image/png" href="/assets/image/logo/favicon.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #000;
+      color: #fff;
+    }
+    .container {
+      padding: 40px 60px;
+      margin-top: 5vw;
+    }
+    .empty {
+      text-align: center;
+      color: #aaa;
+      font-size: 18px;
+    }
+    .movie-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .movie-table th, .movie-table td {
+      padding: 15px;
+    }
+    .movie-table thead {
+      background: #1a1a1a;
+    }
+    .movie-table th {
+      font-size: 14px;
+      text-align: center;
+      color: #ccc;
+    }
+    .movie-table tbody tr {
+      border-bottom: 1px solid #222;
+      transition: 0.2s;
+    }
+    tr td {
+      text-align: center;
+    }
+    .movie-table tbody tr:hover {
+      background: #1f1f1f;
+    }
+    .poster {
+      width: 60px;
+      border-radius: 5px;
+    }
+    .edit {
+      color: #000;
+      background: #feca57;
+      padding: 5px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-right: 6px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .edit:hover {
+      background: #f9ca24;
+    }
+    .delete {
+      color: #fff;
+      background: #ff6b6b;
+      padding: 5px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .delete:hover {
+      background: #ee5a24;
+    }
+  </style>
+</head>
+<body>
+
+<%- include('header') %>
+
+<div class="container">
+
+  <% if (!movies || movies.length === 0) { %>
+    <p class="empty">No movies available</p>
+  <% } else { %>
+
+    <table class="movie-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Poster</th>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Category</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% movies.forEach((movie, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+
+            <td>
+              <% if (movie.poster) { %>
+                <img src="<%= movie.poster %>" class="poster">
+              <% } else { %>
+                <span>No Image</span>
+              <% } %>
+            </td>
+
+            <td><%= movie.title %></td>
+            <td><%= movie.year %></td>
+            <td><%= movie.category %></td>
+
+            <td>
+              <a href="/edit/<%= movie._id %>" class="edit">Edit</a>
+              <a href="/api/movies/delete/<%= movie._id %>" class="delete">Delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+
+    </table>
+
+  <% } %>
+
+</div>
+
+<%- include('footer') %>
+
+</body>
+</html>
