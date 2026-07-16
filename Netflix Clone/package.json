@@ -1,7 +1,9 @@
 {
   "name": "netflix-clone",
   "version": "1.0.0",
+  "description": "A full-stack Netflix-inspired Movie Management Web App built using Node.js, Express, MongoDB, and EJS.",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -10,11 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.2.1",
     "ejs": "^5.0.2",
     "express": "^5.2.1",
     "mongoose": "^9.5.0",
     "multer": "^2.1.1"
-  },
-  "description": "A full-stack **Netflix-inspired Movie Management Web App** built using **Node.js, Express, MongoDB, and EJS**, where users can **add, view, edit, and delete movies** with poster uploads.",
-  "type": "commonjs"
+  }
 }
