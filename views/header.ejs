@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="/assets/css/style.css" />
+<link rel="icon" type="image/png" href="/assets/image/logo/favicon.png">
+<link rel="shortcut icon" type="image/png" href="/assets/image/logo/favicon.png">
+
+<style>
+  /* Header Styles */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 80%, transparent 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: background 0.4s ease;
+  }
+
+  .header.scrolled {
+    background: #141414;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+
+  .header .logo {
+    height: 32px;
+    width: auto;
+  }
+
+  .header-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .header-right .btn-add {
+    color: #e5e5e5;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+    padding: 8px 16px;
+    border-radius: 4px;
+  }
+
+  .header-right .btn-add:hover {
+    color: #ffffff;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .header {
+      padding: 12px 18px;
+    }
+    .header .logo {
+      height: 25px;
+    }
+    .header-right {
+      gap: 10px;
+    }
+    .header-right .btn-add {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header {
+      padding: 10px 12px;
+    }
+    .header .logo {
+      height: 20px;
+    }
+    .header-right .btn-add {
+      font-size: 11px;
+      padding: 4px 10px;
+    }
+  }
+</style>
+
+<header class="header" id="header">
+  <div class="header-left">
+    <a href="/">
+      <img src="/assets/image/logo/logo.png" class="logo" alt="Netflix Clone" />
+    </a>
+  </div>
+
+  <div class="header-right">
+    <a href="/movies" class="btn-add">View Movies</a>
+    <a href="/add" class="btn-add">Add Movie</a>
+  </div>
+</header>
+
+<script>
+  // Scroll effect for header
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('header');
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+</script>

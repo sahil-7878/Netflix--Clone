@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Movie</title>
+
+  <!-- Better Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #0f0f0f;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 30px;
+      background: #1a1a1a;
+      border-radius: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: #bbb;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #111;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #e50914;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    select option {
+      background: #111;
+      color: #fff;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #e50914;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #c40812;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+<%- include('header') %>
+
+<div class="container">
+
+  <h1>Add New Movie</h1>
+
+  <!-- ✅ CHANGE: action="/add" -->
+  <form action="/add" method="POST" enctype="multipart/form-data">
+
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" name="title" required>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>Year</label>
+        <input type="number" name="year" required>
+      </div>
+
+      <div class="form-group">
+        <label>Duration (min)</label>
+        <input type="number" name="duration">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>Genre / Category</label>
+        <select name="genre" required>
+          <option value="">Select Category</option>
+          <option value="Action">Action</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Drama">Drama</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Horror">Horror</option>
+          <option value="Romance">Romance</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Documentary">Documentary</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Animation">Animation</option>
+          <option value="Crime">Crime</option>
+          <option value="Family">Family</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Mystery">Mystery</option>
+          <option value="War">War</option>
+          <option value="Western">Western</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Director</label>
+        <input type="text" name="director">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Rating</label>
+      <input type="number" step="0.1" name="rating" min="0" max="10">
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="description" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Poster</label>
+      <input type="file" name="poster" accept="image/*" required>
+      <small style="color: #888; display: block; margin-top: 4px;">Upload a poster image (JPG, PNG, WEBP)</small>
+    </div>
+
+    <button class="btn">Add Movie</button>
+
+  </form>
+
+  <a href="/" class="back">⬅ Back to Home</a>
+
+</div>
+
+<%- include('footer') %>
+
+</body>
+</html>

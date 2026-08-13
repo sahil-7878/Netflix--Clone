@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Movie</title>
+  <link rel="icon" type="image/png" href="/assets/image/logo/favicon.png">
+  
+  <!-- ✅ CSS FILES -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/add-movie.css" />
+  
+  <style>
+    /* Edit Page Styles */
+    .form-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 100px 20px 60px;
+    }
+
+    .form-card {
+      background: rgba(20,20,20,0.95);
+      border-radius: 16px;
+      padding: 40px 45px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .form-card h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .form-card h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #e50914;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .form-section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #e5e5e5;
+      font-weight: 500;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #e50914;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group select option {
+      background: #1a1a1a !important;
+      color: #fff !important;
+    }
+
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    .form-group input[type="file"] {
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+    }
+
+    .form-group input[type="file"]::file-selector-button {
+      padding: 8px 20px;
+      background: #e50914;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 14px;
+      transition: all 0.3s;
+    }
+
+    .form-group input[type="file"]::file-selector-button:hover {
+      background: #ff0a1a;
+    }
+
+    .form-group small {
+      display: block;
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #e50914;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background: #ff0a1a;
+      transform: scale(1.01);
+    }
+
+    .current-poster {
+      margin-top: 6px;
+    }
+
+    .current-poster img {
+      max-width: 120px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.06);
+    }
+
+    .current-poster .no-poster {
+      color: rgba(255,255,255,0.3);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-wrapper {
+        padding: 80px 15px 40px;
+      }
+      .form-card {
+        padding: 25px 20px;
+      }
+      .form-card h1 {
+        font-size: 24px;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .form-wrapper {
+        padding: 70px 10px 30px;
+      }
+      .form-card {
+        padding: 18px 14px;
+      }
+      .form-card h1 {
+        font-size: 20px;
+      }
+      .submit-btn {
+        font-size: 16px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<%- include('header') -%>
+
+<div class="form-wrapper">
+  <div class="form-card">
+    <h1>✏️ Edit Movie</h1>
+
+    <form action="/api/movies/update/<%= movie._id %>" method="POST" enctype="multipart/form-data">
+
+      <div class="form-section">
+        <h3>Basic Info</h3>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" value="<%= movie.title %>" required />
+          </div>
+
+          <div class="form-group">
+            <label>Release Year</label>
+            <input type="number" name="year" value="<%= movie.year %>" required />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Genre / Category</label>
+            <select name="genre" required>
+              <option value="">Select Category</option>
+              <option value="Action" <%= (Array.isArray(movie.genre) && movie.genre.includes('Action')) || movie.genre === 'Action' ? 'selected' : '' %>>Action</option>
+              <option value="Comedy" <%= (Array.isArray(movie.genre) && movie.genre.includes('Comedy')) || movie.genre === 'Comedy' ? 'selected' : '' %>>Comedy</option>
+              <option value="Drama" <%= (Array.isArray(movie.genre) && movie.genre.includes('Drama')) || movie.genre === 'Drama' ? 'selected' : '' %>>Drama</option>
+              <option value="Sci-Fi" <%= (Array.isArray(movie.genre) && movie.genre.includes('Sci-Fi')) || movie.genre === 'Sci-Fi' ? 'selected' : '' %>>Sci-Fi</option>
+              <option value="Horror" <%= (Array.isArray(movie.genre) && movie.genre.includes('Horror')) || movie.genre === 'Horror' ? 'selected' : '' %>>Horror</option>
+              <option value="Romance" <%= (Array.isArray(movie.genre) && movie.genre.includes('Romance')) || movie.genre === 'Romance' ? 'selected' : '' %>>Romance</option>
+              <option value="Thriller" <%= (Array.isArray(movie.genre) && movie.genre.includes('Thriller')) || movie.genre === 'Thriller' ? 'selected' : '' %>>Thriller</option>
+              <option value="Documentary" <%= (Array.isArray(movie.genre) && movie.genre.includes('Documentary')) || movie.genre === 'Documentary' ? 'selected' : '' %>>Documentary</option>
+              <option value="Adventure" <%= (Array.isArray(movie.genre) && movie.genre.includes('Adventure')) || movie.genre === 'Adventure' ? 'selected' : '' %>>Adventure</option>
+              <option value="Animation" <%= (Array.isArray(movie.genre) && movie.genre.includes('Animation')) || movie.genre === 'Animation' ? 'selected' : '' %>>Animation</option>
+              <option value="Crime" <%= (Array.isArray(movie.genre) && movie.genre.includes('Crime')) || movie.genre === 'Crime' ? 'selected' : '' %>>Crime</option>
+              <option value="Family" <%= (Array.isArray(movie.genre) && movie.genre.includes('Family')) || movie.genre === 'Family' ? 'selected' : '' %>>Family</option>
+              <option value="Fantasy" <%= (Array.isArray(movie.genre) && movie.genre.includes('Fantasy')) || movie.genre === 'Fantasy' ? 'selected' : '' %>>Fantasy</option>
+              <option value="Mystery" <%= (Array.isArray(movie.genre) && movie.genre.includes('Mystery')) || movie.genre === 'Mystery' ? 'selected' : '' %>>Mystery</option>
+              <option value="War" <%= (Array.isArray(movie.genre) && movie.genre.includes('War')) || movie.genre === 'War' ? 'selected' : '' %>>War</option>
+              <option value="Western" <%= (Array.isArray(movie.genre) && movie.genre.includes('Western')) || movie.genre === 'Western' ? 'selected' : '' %>>Western</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Director</label>
+            <input type="text" name="director" value="<%= movie.director %>" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Details</h3>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Rating</label>
+            <input type="number" step="0.1" name="rating" min="0" max="10" value="<%= movie.rating %>" />
+          </div>
+
+          <div class="form-group">
+            <label>Duration (min)</label>
+            <input type="number" name="duration" value="<%= movie.duration %>" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Media</h3>
+
+        <div class="form-group">
+          <label>Current Poster</label>
+          <div class="current-poster">
+            <% if (movie.poster) { %>
+              <img src="<%= movie.poster %>" alt="<%= movie.title %>" />
+            <% } else { %>
+              <span class="no-poster">No poster uploaded</span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Change Poster</label>
+          <input type="file" name="poster" accept="image/*" />
+          <small>Leave empty to keep current poster</small>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" rows="4"><%= movie.description %></textarea>
+        </div>
+      </div>
+
+      <button class="submit-btn">Update Movie</button>
+
+    </form>
+  </div>
+</div>
+
+<%- include('footer.ejs') -%>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Movie</title>
+  <link rel="icon" type="image/png" href="/assets/image/logo/favicon.png">
+  
+  <!-- ✅ CSS FILES -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/add-movie.css" />
+  
+  <style>
+    /* Edit Page Styles */
+    .form-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 100px 20px 60px;
+    }
+
+    .form-card {
+      background: rgba(20,20,20,0.95);
+      border-radius: 16px;
+      padding: 40px 45px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .form-card h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .form-card h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #e50914;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .form-section h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #e5e5e5;
+      font-weight: 500;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #e50914;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group select option {
+      background: #1a1a1a !important;
+      color: #fff !important;
+    }
+
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    .form-group input[type="file"] {
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+    }
+
+    .form-group input[type="file"]::file-selector-button {
+      padding: 8px 20px;
+      background: #e50914;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 14px;
+      transition: all 0.3s;
+    }
+
+    .form-group input[type="file"]::file-selector-button:hover {
+      background: #ff0a1a;
+    }
+
+    .form-group small {
+      display: block;
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #e50914;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      background: #ff0a1a;
+      transform: scale(1.01);
+    }
+
+    .current-poster {
+      margin-top: 6px;
+    }
+
+    .current-poster img {
+      max-width: 120px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.06);
+    }
+
+    .current-poster .no-poster {
+      color: rgba(255,255,255,0.3);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-wrapper {
+        padding: 80px 15px 40px;
+      }
+      .form-card {
+        padding: 25px 20px;
+      }
+      .form-card h1 {
+        font-size: 24px;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .form-wrapper {
+        padding: 70px 10px 30px;
+      }
+      .form-card {
+        padding: 18px 14px;
+      }
+      .form-card h1 {
+        font-size: 20px;
+      }
+      .submit-btn {
+        font-size: 16px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<%- include('header') -%>
+
+<div class="form-wrapper">
+  <div class="form-card">
+    <h1>✏️ Edit Movie</h1>
+
+    <form action="/api/movies/update/<%= movie._id %>" method="POST" enctype="multipart/form-data">
+
+      <div class="form-section">
+        <h3>Basic Info</h3>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" value="<%= movie.title %>" required />
+          </div>
+
+          <div class="form-group">
+            <label>Release Year</label>
+            <input type="number" name="year" value="<%= movie.year %>" required />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Genre / Category</label>
+            <select name="genre" required>
+              <option value="">Select Category</option>
+              <option value="Action" <%= (Array.isArray(movie.genre) && movie.genre.includes('Action')) || movie.genre === 'Action' ? 'selected' : '' %>>Action</option>
+              <option value="Comedy" <%= (Array.isArray(movie.genre) && movie.genre.includes('Comedy')) || movie.genre === 'Comedy' ? 'selected' : '' %>>Comedy</option>
+              <option value="Drama" <%= (Array.isArray(movie.genre) && movie.genre.includes('Drama')) || movie.genre === 'Drama' ? 'selected' : '' %>>Drama</option>
+              <option value="Sci-Fi" <%= (Array.isArray(movie.genre) && movie.genre.includes('Sci-Fi')) || movie.genre === 'Sci-Fi' ? 'selected' : '' %>>Sci-Fi</option>
+              <option value="Horror" <%= (Array.isArray(movie.genre) && movie.genre.includes('Horror')) || movie.genre === 'Horror' ? 'selected' : '' %>>Horror</option>
+              <option value="Romance" <%= (Array.isArray(movie.genre) && movie.genre.includes('Romance')) || movie.genre === 'Romance' ? 'selected' : '' %>>Romance</option>
+              <option value="Thriller" <%= (Array.isArray(movie.genre) && movie.genre.includes('Thriller')) || movie.genre === 'Thriller' ? 'selected' : '' %>>Thriller</option>
+              <option value="Documentary" <%= (Array.isArray(movie.genre) && movie.genre.includes('Documentary')) || movie.genre === 'Documentary' ? 'selected' : '' %>>Documentary</option>
+              <option value="Adventure" <%= (Array.isArray(movie.genre) && movie.genre.includes('Adventure')) || movie.genre === 'Adventure' ? 'selected' : '' %>>Adventure</option>
+              <option value="Animation" <%= (Array.isArray(movie.genre) && movie.genre.includes('Animation')) || movie.genre === 'Animation' ? 'selected' : '' %>>Animation</option>
+              <option value="Crime" <%= (Array.isArray(movie.genre) && movie.genre.includes('Crime')) || movie.genre === 'Crime' ? 'selected' : '' %>>Crime</option>
+              <option value="Family" <%= (Array.isArray(movie.genre) && movie.genre.includes('Family')) || movie.genre === 'Family' ? 'selected' : '' %>>Family</option>
+              <option value="Fantasy" <%= (Array.isArray(movie.genre) && movie.genre.includes('Fantasy')) || movie.genre === 'Fantasy' ? 'selected' : '' %>>Fantasy</option>
+              <option value="Mystery" <%= (Array.isArray(movie.genre) && movie.genre.includes('Mystery')) || movie.genre === 'Mystery' ? 'selected' : '' %>>Mystery</option>
+              <option value="War" <%= (Array.isArray(movie.genre) && movie.genre.includes('War')) || movie.genre === 'War' ? 'selected' : '' %>>War</option>
+              <option value="Western" <%= (Array.isArray(movie.genre) && movie.genre.includes('Western')) || movie.genre === 'Western' ? 'selected' : '' %>>Western</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Director</label>
+            <input type="text" name="director" value="<%= movie.director %>" required />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Details</h3>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Rating</label>
+            <input type="number" step="0.1" name="rating" min="0" max="10" value="<%= movie.rating %>" />
+          </div>
+
+          <div class="form-group">
+            <label>Duration (min)</label>
+            <input type="number" name="duration" value="<%= movie.duration %>" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Media</h3>
+
+        <div class="form-group">
+          <label>Current Poster</label>
+          <div class="current-poster">
+            <% if (movie.poster) { %>
+              <img src="<%= movie.poster %>" alt="<%= movie.title %>" />
+            <% } else { %>
+              <span class="no-poster">No poster uploaded</span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Change Poster</label>
+          <input type="file" name="poster" accept="image/*" />
+          <small>Leave empty to keep current poster</small>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" rows="4"><%= movie.description %></textarea>
+        </div>
+      </div>
+
+      <button class="submit-btn">Update Movie</button>
+
+    </form>
+  </div>
+</div>
+
+<%- include('footer.ejs') -%>
+
+</body>
+</html>
