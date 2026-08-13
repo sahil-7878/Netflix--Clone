@@ -373,7 +373,7 @@
 </head>
 <body>
 
-<%- include('partials/header') %>
+<%- include('header') %>
 
 <%
   let genres = Array.isArray(movie.genre) ? movie.genre : (movie.genre || "").split(",");
@@ -453,7 +453,7 @@
   </div>
 </div>
 
-<%- include('partials/footer') %>
+<%- include('footer') %>
 
 <script>
 function deleteMovie(id) {
